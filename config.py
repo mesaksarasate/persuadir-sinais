@@ -1,15 +1,15 @@
 """
 Persuadir Sinais V2 - Configuração
---------------------------------------
+-----------------------------------
 """
 
 SYMBOLS = [
-    "BTC/USDT",
-    "SOL/USDT",
-    "LINK/USDT",
+    "BTC/USD",
+    "SOL/USD",
+    "LINK/USD",
 ]
 
-EXCHANGE_ID = "binance"
+EXCHANGE_ID = "kraken"
 
 # Múltiplos intervalos de tempo analisados juntos. O sinal só dispara
 # quando pelo menos MIN_TIMEFRAMES_AGREE concordam na direção - isso é
