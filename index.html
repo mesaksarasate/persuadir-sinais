@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Persuadir Sinais</title>
+<meta name="description" content="Sinais de compra e venda em tempo real para BTC, SOL e LINK.">
+<meta name="theme-color" content="#1C1C1F">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="dark">
+
+  <!-- ENTRADA -->
+  <div id="entry-view" class="view active">
+    <button class="theme-toggle" id="theme-toggle-entry" aria-label="Alternar tema" type="button">
+      <svg id="theme-icon-entry" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+    </button>
+    <div class="entry-content">
+      <div class="app-icon">
+        <svg class="app-icon-svg" viewBox="0 0 512 512" aria-hidden="true">
+          <defs>
+            <linearGradient id="iconGraphite" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#2E2E32"/>
+              <stop offset="100%" stop-color="#1C1C1F"/>
+            </linearGradient>
+          </defs>
+          <rect width="512" height="512" rx="112" fill="url(#iconGraphite)"/>
+          <path id="icon-line"
+                d="M 108 336 L 176 336 L 212 240 L 252 392 L 300 168 L 344 272 L 380 224"
+                fill="none" stroke="#D9A62E" stroke-width="22"
+                stroke-linecap="round" stroke-linejoin="round"/>
+          <circle id="icon-dot-ring" cx="380" cy="224" r="20" fill="none" stroke="#D9A62E" stroke-width="4"/>
+          <circle id="icon-dot" cx="380" cy="224" r="20" fill="#D9A62E"/>
+        </svg>
+      </div>
+      <div class="app-name">
+        <span class="wordmark">Persuadir</span>
+        <span class="complement">Sinais</span>
+      </div>
+    </div>
+    <div class="signature"><span class="wordmark">por Mesak Sarasate</span></div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard-view" class="view">
+    <header class="app-header">
+      <div class="title">
+        <span class="wordmark">Persuadir</span>
+        <span class="complement">Sinais</span>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" id="theme-toggle-dash" aria-label="Alternar tema" type="button">
+          <svg id="theme-icon-dash" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+        </button>
+        <button class="icon-btn" id="open-settings" aria-label="Ajustes" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+    <div class="content">
+      <div class="updated-row">
+        <span class="pulse-dot" id="live-dot"></span>
+        <span id="updated-label">Atualizando...</span>
+      </div>
+      <div id="cards-container"></div>
+    </div>
+  </div>
+
+  <!-- AJUSTES / SOBRE -->
+  <div id="settings-view" class="view">
+    <header class="app-header">
+      <div class="title">
+        <button class="icon-btn" id="close-settings" aria-label="Voltar" type="button" style="margin-right:6px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6"></path>
+          </svg>
+        </button>
+        <span class="wordmark">Persuadir</span>
+        <span class="complement">Sinais</span>
+      </div>
+    </header>
+    <div class="content">
+      <div class="settings-group">
+        <div class="settings-row"><span class="label">Ativos monitorados</span><span class="value">BTC · SOL · LINK</span></div>
+        <div class="settings-row"><span class="label">Fonte de preços</span><span class="value">Kraken</span></div>
+        <div class="settings-row"><span class="label">Atualização</span><span class="value">A cada 1 min</span></div>
+        <div class="settings-row"><span class="label">Versão</span><span class="value" id="version-value">1.0.0</span></div>
+        <div class="settings-row"><span class="label">Licenciado para</span><span class="value" id="license-value">Mesak Sarasate</span></div>
+      </div>
+      <div class="about-footer">
+        <div id="copyright-line">© 2026 Mesak Sarasate · Todos os direitos reservados</div>
+        <div style="margin-top:6px;">um sistema <span class="wordmark">Persuadir</span></div>
+      </div>
+    </div>
+  </div>
+
+<script src="app.js"></script>
+</body>
+</html>

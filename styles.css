@@ -1,0 +1,440 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Young+Serif&display=swap');
+
+:root {
+  --bg: #F6F5F2;
+  --surface: #FFFFFF;
+  --surface-2: #EFEDE8;
+  --text: #1C1C1F;
+  --text-muted: #6B6B70;
+  --border: rgba(28, 28, 31, 0.10);
+  --accent: #A77D1B;
+  --accent-contrast: #FFFFFF;
+  --buy: #1F8A52;
+  --sell: #C23A3E;
+  --shadow: 0 1px 2px rgba(28,28,31,0.04), 0 8px 24px rgba(28,28,31,0.06);
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+}
+
+[data-theme="dark"] {
+  --bg: #1C1C1F;
+  --surface: #242428;
+  --surface-2: #2C2C31;
+  --text: #EDEDED;
+  --text-muted: #9A9A9E;
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #D9A62E;
+  --accent-contrast: #1C1C1F;
+  --buy: #3FB67A;
+  --sell: #E05659;
+  --shadow: 0 1px 2px rgba(0,0,0,0.2), 0 8px 24px rgba(0,0,0,0.3);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.wordmark {
+  font-family: 'Young Serif', serif;
+  font-weight: 400;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+a { color: inherit; }
+
+.view {
+  display: none;
+  min-height: 100vh;
+}
+
+.view.active {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Entry screen ---------- */
+#entry-view {
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;
+  cursor: pointer;
+}
+
+.entry-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.app-icon {
+  width: 96px;
+  height: 96px;
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.app-icon-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.app-icon-svg circle { transform-box: view-box; transform-origin: 380px 224px; }
+
+.ring-pulse {
+  animation: iconRingPulse 1.5s ease-out infinite;
+}
+
+@keyframes iconRingPulse {
+  0%   { transform: scale(1);   opacity: 0.85; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+.app-name {
+  opacity: 0;
+}
+
+.app-name {
+  font-size: 28px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.app-name .wordmark {
+  font-size: 32px;
+  color: var(--accent);
+}
+
+.app-name .complement {
+  display: block;
+  font-size: 16px;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  z-index: 5;
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--text);
+}
+
+.signature {
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.signature .wordmark {
+  color: var(--text-muted);
+}
+
+/* ---------- Header ---------- */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 4;
+  border-bottom: 1px solid var(--border);
+}
+
+.app-header .title {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.app-header .title .wordmark {
+  font-size: 20px;
+  color: var(--accent);
+}
+
+.app-header .title .complement {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.icon-btn:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.icon-btn svg {
+  width: 19px;
+  height: 19px;
+}
+
+/* ---------- Dashboard ---------- */
+#dashboard-view .content {
+  padding: 16px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 560px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.updated-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 12.5px;
+  padding: 2px 4px 4px;
+}
+
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--buy);
+  box-shadow: 0 0 0 0 rgba(63,182,122,0.5);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(63,182,122,0.45); }
+  70% { box-shadow: 0 0 0 7px rgba(63,182,122,0); }
+  100% { box-shadow: 0 0 0 0 rgba(63,182,122,0); }
+}
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 18px 18px 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.symbol-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.symbol-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.symbol-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.symbol-sub {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.score-value {
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.score-value.pos { color: var(--buy); }
+.score-value.neg { color: var(--sell); }
+
+.sparkline-wrap {
+  margin: 14px 0 10px;
+  height: 56px;
+}
+
+.sparkline-wrap svg { width: 100%; height: 100%; display: block; }
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-muted);
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.accuracy-value {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.signal-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+}
+
+.signal-badge.buy {
+  background: rgba(63,182,122,0.12);
+  color: var(--buy);
+}
+
+.signal-badge.sell {
+  background: rgba(224,86,89,0.12);
+  color: var(--sell);
+}
+
+[data-theme="light"] .signal-badge.buy,
+:root:not([data-theme="dark"]) .signal-badge.buy {
+  background: rgba(31,138,82,0.10);
+}
+
+[data-theme="light"] .signal-badge.sell,
+:root:not([data-theme="dark"]) .signal-badge.sell {
+  background: rgba(194,58,62,0.10);
+}
+
+.signal-tag {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 3px 9px;
+  border-radius: 100px;
+  font-size: 12px;
+  background: currentColor;
+}
+
+.signal-tag span {
+  color: var(--surface);
+  font-weight: 700;
+}
+
+.signal-meta {
+  color: var(--text);
+  opacity: 0.85;
+  font-size: 13px;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 60px 24px;
+  font-size: 14px;
+}
+
+.error-state {
+  text-align: center;
+  color: var(--sell);
+  padding: 20px 24px;
+  font-size: 13.5px;
+}
+
+/* ---------- Settings view ---------- */
+#settings-view .content {
+  padding: 8px 20px 40px;
+  max-width: 560px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.settings-group {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-top: 18px;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  font-size: 14.5px;
+  border-bottom: 1px solid var(--border);
+}
+
+.settings-row:last-child { border-bottom: none; }
+
+.settings-row .label { color: var(--text-muted); }
+.settings-row .value { font-weight: 500; }
+
+.about-footer {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 12.5px;
+  margin-top: 28px;
+  line-height: 1.6;
+}
+
+.about-footer .wordmark {
+  color: var(--text-muted);
+}
