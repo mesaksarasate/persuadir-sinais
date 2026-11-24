@@ -8,6 +8,7 @@ não precisa mudar.
 """
 
 import config
+import push_notifier
 from signal_engine import Signal
 
 
@@ -42,6 +43,12 @@ def send_whatsapp(signal: Signal):
 
 
 def notify(signal: Signal):
+    # Notificação push (navegador/celular) — melhor-esforço, nunca derruba o fluxo.
+    try:
+        push_notifier.send_push(signal)
+    except Exception:
+        pass
+
     if signal.action == "NEUTRO":
         return  # Não precisa poluir o canal com "nada aconteceu"
 
