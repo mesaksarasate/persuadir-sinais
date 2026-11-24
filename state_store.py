@@ -201,16 +201,36 @@ class CloudflareKVStore(StateStore):
     # ---------- Ciclo de vida (1 leitura e 1 gravação por ciclo) ----------
 
     def load_all(self):
-        data = self._get(COMBINED_KEY)
-        self._cache = data if isinstance(data, dict) else {}
+        """Carrega o estado da Cloudflare. Se a leitura falhar (ex.: instabilidade
+        momentânea da Cloudflare, limite de requisições), não derruba o processo:
+        registra o erro e segue com um estado vazio em memória, para não travar
+        o ciclo inteiro por causa de um soluço de rede."""
+        try:
+            data = self._get(COMBINED_KEY)
+            self._cache = data if isinstance(data, dict) else {}
+        except Exception as exc:
+            print(f"[state_store] Erro ao carregar estado da Cloudflare KV: {exc}")
+            self._cache = {}
         self._dirty = False
 
     def flush_all(self):
+        """Grava o estado consolidado na Cloudflare. Se a gravação falhar (ex.:
+        limite diário de gravações da Cloudflare ainda não liberou, instabilidade
+        momentânea), NÃO derruba o processo: registra o erro e segue em frente.
+        O próximo ciclo (6 minutos depois) tenta gravar de novo normalmente -
+        os cálculos deste ciclo não se perdem de forma grave, só a persistência
+        dele é adiada."""
         if self._cache is not None and self._dirty:
-            self._put(COMBINED_KEY, self._cache)
-            self._dirty = False
+            try:
+                self._put(COMBINED_KEY, self._cache)
+                self._dirty = False
+            except Exception as exc:
+                print(f"[state_store] Erro ao gravar estado na Cloudflare KV: {exc}")
         if self._news_dirty is not None:
-            self._put(NEWS_KEY, self._news_dirty)
+            try:
+                self._put(NEWS_KEY, self._news_dirty)
+            except Exception as exc:
+                print(f"[state_store] Erro ao gravar notícias na Cloudflare KV: {exc}")
             self._news_dirty = None
 
     # ---------- Interface StateStore ----------
