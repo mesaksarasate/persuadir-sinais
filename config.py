@@ -5,6 +5,7 @@ Persuadir Sinais V2 - Configuração
 
 SYMBOLS = [
     "BTC/USD",
+    "ETH/USD",
     "SOL/USD",
     "LINK/USD",
 ]
@@ -31,3 +32,10 @@ RESOLUTION_HORIZON_CANDLES = 5
 
 MODE = "AVISO"
 NOTIFY_CHANNEL = "CONSOLE"
+
+# A cada quantos minutos buscar notícias (independente do ciclo de sinais,
+# que roda a cada 6 min). Notícias mudam mais devagar que preço, então não
+# precisa buscar a cada ciclo — isso economiza cota de escrita na KV e
+# chamadas à fonte de notícias.
+NEWS_REFRESH_MINUTES = 30
+NEWS_ITEMS_LIMIT = 6
