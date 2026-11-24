@@ -29,6 +29,8 @@ const els = {
   dashboardView: document.getElementById("dashboard-view"),
   settingsView: document.getElementById("settings-view"),
   adminView: document.getElementById("admin-view"),
+  newsView: document.getElementById("news-view"),
+  newsList: document.getElementById("news-list"),
   cardsContainer: document.getElementById("cards-container"),
   updatedLabel: document.getElementById("updated-label"),
   liveDot: document.getElementById("live-dot"),
@@ -77,7 +79,7 @@ document.getElementById("theme-toggle-dash").addEventListener("click", toggleThe
 
 // ---------- Navegação entre telas ----------
 function showView(view) {
-  [els.authView, els.dashboardView, els.settingsView, els.adminView].forEach((v) => v.classList.remove("active"));
+  [els.authView, els.dashboardView, els.settingsView, els.adminView, els.newsView].forEach((v) => v.classList.remove("active"));
   view.classList.add("active");
 }
 
@@ -110,6 +112,8 @@ document.getElementById("open-settings").addEventListener("click", () => showVie
 document.getElementById("close-settings").addEventListener("click", () => showView(els.dashboardView));
 document.getElementById("open-admin").addEventListener("click", () => { showView(els.adminView); loadUsers(); });
 document.getElementById("close-admin").addEventListener("click", () => showView(els.settingsView));
+document.getElementById("open-news").addEventListener("click", () => { showView(els.newsView); loadNews(); });
+document.getElementById("close-news").addEventListener("click", () => showView(els.dashboardView));
 
 document.getElementById("logout-btn").addEventListener("click", async () => {
   const token = getToken();
@@ -305,6 +309,43 @@ async function loadData() {
     els.updatedLabel.textContent = "Falha na atualização";
     els.liveDot.style.background = "var(--sell)";
     console.error("Persuadir Sinais — erro ao buscar dados:", err);
+  }
+}
+
+// ---------- Notícias ----------
+function timeAgoFromRfc822(pubDateStr) {
+  if (!pubDateStr) return "";
+  const date = new Date(pubDateStr);
+  if (isNaN(date.getTime())) return "";
+  const diffMs = Date.now() - date.getTime();
+  const mins = Math.floor(diffMs / 60000);
+  if (mins < 1) return "agora mesmo";
+  if (mins < 60) return `há ${mins} min`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `há ${hours}h`;
+  const days = Math.floor(hours / 24);
+  return `há ${days}d`;
+}
+
+async function loadNews() {
+  const token = getToken();
+  els.newsList.innerHTML = '<div class="settings-row"><span class="label">Carregando...</span></div>';
+  try {
+    const res = await fetch(API_URL + "/news", { cache: "no-store", headers: { Authorization: "Bearer " + token } });
+    if (res.status === 401) { goToLogin("Sessão expirada. Entre novamente."); return; }
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Não foi possível carregar as notícias.");
+
+    const items = Array.isArray(data.items) ? data.items : [];
+    els.newsList.innerHTML = items.length
+      ? items.map((item) => `
+          <a class="news-item" href="${item.url}" target="_blank" rel="noopener">
+            <div class="news-title">${item.title}</div>
+            <div class="news-meta">${timeAgoFromRfc822(item.published)}</div>
+          </a>`).join("")
+      : '<div class="settings-row"><span class="label">Nenhuma notícia disponível ainda</span></div>';
+  } catch (err) {
+    els.newsList.innerHTML = `<div class="settings-row"><span class="label">${err.message}</span></div>`;
   }
 }
 
