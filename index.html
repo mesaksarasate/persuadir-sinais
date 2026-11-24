@@ -92,6 +92,15 @@
         <span class="complement">Sinais</span>
       </div>
       <div class="header-actions">
+        <button class="icon-btn" id="open-news" aria-label="Notícias" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h12a2 2 0 0 1 2 2v12a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2V4z"></path>
+            <path d="M18 8h2a2 2 0 0 1 2 2v9a1 1 0 0 1-1 1H6"></path>
+            <line x1="8" y1="8" x2="14" y2="8"></line>
+            <line x1="8" y1="12" x2="14" y2="12"></line>
+            <line x1="8" y1="16" x2="11" y2="16"></line>
+          </svg>
+        </button>
         <button class="icon-btn" id="theme-toggle-dash" aria-label="Alternar tema" type="button">
           <svg id="theme-icon-dash" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
         </button>
@@ -116,6 +125,24 @@
         <span id="updated-label">Atualizando...</span>
       </div>
       <div id="cards-container"></div>
+    </div>
+  </div>
+
+  <!-- NOTÍCIAS -->
+  <div id="news-view" class="view">
+    <header class="app-header">
+      <div class="title">
+        <button class="icon-btn" id="close-news" aria-label="Voltar" type="button" style="margin-right:6px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6"></path>
+          </svg>
+        </button>
+        <span class="wordmark">Persuadir</span>
+        <span class="complement">Notícias</span>
+      </div>
+    </header>
+    <div class="content">
+      <div id="news-list" class="news-list"></div>
     </div>
   </div>
 
