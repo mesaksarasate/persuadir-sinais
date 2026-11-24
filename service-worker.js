@@ -2,7 +2,7 @@
 // Faz cache apenas do "casco" estático do app. Os dados de sinais (API)
 // nunca são servidos do cache: são sempre buscados em tempo real.
 
-const CACHE_NAME = "persuadir-sinais-v1";
+const CACHE_NAME = "persuadir-sinais-v2";
 const SHELL_FILES = [
   "./",
   "./index.html",
@@ -27,6 +27,35 @@ self.addEventListener("activate", (event) => {
     )
   );
   self.clients.claim();
+});
+
+self.addEventListener("push", (event) => {
+  let payload = { title: "Persuadir Sinais", body: "Novo sinal disponível." };
+  try { if (event.data) payload = { ...payload, ...event.data.json() }; } catch (e) {}
+
+  event.waitUntil(
+    self.registration.showNotification(payload.title, {
+      body: payload.body,
+      icon: "./icons/icon-192.png",
+      badge: "./icons/icon-192.png",
+      tag: payload.tag || "persuadir-sinais",
+      renotify: true,
+      data: { url: payload.url || "./" },
+    })
+  );
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const targetUrl = (event.notification.data && event.notification.data.url) || "./";
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
+      for (const client of clients) {
+        if ("focus" in client) return client.focus();
+      }
+      if (self.clients.openWindow) return self.clients.openWindow(targetUrl);
+    })
+  );
 });
 
 self.addEventListener("fetch", (event) => {
