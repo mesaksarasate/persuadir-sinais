@@ -8,6 +8,8 @@ decide nada sozinho no sinal (essa parte, de ajustar a confiança com
 base no contexto, é uma camada separada, a ser somada depois).
 """
 
+from __future__ import annotations
+
 import xml.etree.ElementTree as ET
 
 import requests
